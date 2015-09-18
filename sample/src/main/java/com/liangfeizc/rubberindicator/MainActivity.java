@@ -22,6 +22,9 @@ public class MainActivity extends AppCompatActivity
     private static final int SWIPE_THRESHOLD_VELOCITY = 200;
     
     private static final String KEY_INDICATOR_POSITION = "indicator_position";
+    private static final String KEY_INDICATOR_NUMBER = "indicator_number";
+    
+    private static final int DEFAULT_INDICATOR_NUMBER = 5;
 
     private TextView mTextView;
     private RubberIndicator mRubberIndicator;
@@ -40,12 +43,11 @@ public class MainActivity extends AppCompatActivity
         
         // check to see if savedInstanceState is null
         if (savedInstanceState != null) {
-            mRubberIndicator.setCount(5, savedInstanceState.getInt(KEY_INDICATOR_POSITION));
+            mRubberIndicator.setCount(savedInstanceState.getInt(KEY_INDICATOR_NUMBER), savedInstanceState.getInt(KEY_INDICATOR_POSITION));
         } else {
-            mRubberIndicator.setCount(5, 2);
+            mRubberIndicator.setCount(DEFAULT_INDICATOR_NUMBER, 2);
         }
-        
-        //mRubberIndicator.setCount(5, 2);
+ 
         mRubberIndicator.setOnMoveListener(this);
         updateFocusPosition();
     }
@@ -53,6 +55,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         outState.putInt(KEY_INDICATOR_POSITION, mRubberIndicator.getFocusPosition());
+        outState.putInt(KEY_INDICATOR_NUMBER, mRubberIndicator.getChildCount());
         super.onSaveInstanceState(outState);
     }
 
